@@ -1,0 +1,328 @@
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f8fafc;
+}
+
+/* CART CONTAINER */
+
+.cart-container{
+    max-width:1200px;
+    margin:50px auto;
+    background:#ffffff;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.cart-title{
+    text-align:center;
+    font-size:32px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:30px;
+}
+
+/* TABLE */
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table thead{
+    background:#111827;
+    color:white;
+}
+
+.table th{
+    padding:18px;
+    text-align:center;
+    font-weight:600;
+}
+
+.table td{
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.table tbody tr:hover{
+    background:#f9fafb;
+}
+
+/* PRODUCT INFO */
+
+.product-info{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.product-image{
+    width:70px;
+    height:70px;
+    border-radius:12px;
+    object-fit:cover;
+}
+
+.product-name{
+    font-weight:600;
+    color:#111827;
+}
+
+/* BUTTONS */
+
+.action-btn{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    margin:0 4px;
+    transition:.3s;
+}
+
+.plus-btn{
+    background:#10b981;
+    color:white;
+}
+
+.minus-btn{
+    background:#f59e0b;
+    color:white;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+}
+
+.action-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* TOTAL SECTION */
+
+.total-section{
+    margin-top:30px;
+    padding-top:25px;
+    border-top:2px solid #e5e7eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.total-price{
+    font-size:30px;
+    font-weight:700;
+    color:#111827;
+}
+
+.checkout-btn{
+    background:#111827;
+    color:white;
+    padding:14px 28px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.checkout-btn:hover{
+    background:#1f2937;
+}
+
+/* EMPTY CART */
+
+.empty-cart{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.empty-cart i{
+    font-size:90px;
+    color:#cbd5e1;
+    margin-bottom:20px;
+}
+
+.empty-cart h2{
+    color:#111827;
+    margin-bottom:10px;
+}
+
+.empty-cart p{
+    color:#6b7280;
+    font-size:18px;
+}
+
+/* Back Button */
+
+.backhome{
+    margin-top:50px;
+    margin-left: 50px;
+}
+
+.backhome a{
+    text-decoration:none;
+    color:#3B030D;
+    font-weight:600;
+    transition:.3s;
+}
+
+.backhome a:hover{
+    color:#7a1024;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .cart-container{
+        margin:20px;
+        padding:20px;
+    }
+
+    .table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .total-section{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .product-info{
+        min-width:200px;
+    }
+}
+
+</style>
+
+<div class="backhome">
+        <a href="{% url 'home' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Products
+        </a>
+    </div>
+
+<div class="cart-container">
+    <h1 class="cart-title">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Shopping Cart
+    </h1>
+
+    {% if cart_items %}
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for item in cart_items %}
+
+            <tr>
+
+                <td>
+                    <div class="product-info">
+
+                        <img
+                            src="{{ item.product.image.url }}"
+                            alt="{{ item.product.name }}"
+                            class="product-image"
+                        >
+
+                        <span class="product-name">
+                            {{ item.product.name }}
+                        </span>
+
+                    </div>
+                </td>
+
+                <td>{{ item.quantity }}</td>
+
+                <td>SAR {{ item.product.price }}</td>
+
+                <td>SAR {{ item.subtotal }}</td>
+
+                <td>
+
+                    <a href="{% url 'add_to_cart' item.product.id %}"
+                       class="action-btn plus-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
+
+                    <a href="{% url 'decrease_quantity' item.id %}"
+                       class="action-btn minus-btn">
+                        <i class="fa-solid fa-minus"></i>
+                    </a>
+
+                    <a href="{% url 'remove_from_cart' item.id %}"
+                       class="action-btn delete-btn">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <div class="total-section">
+
+        <div class="total-price">
+            Total: SAR {{ total }}
+        </div>
+
+        <a href="{% url 'checkout' %}" class="checkout-btn">
+            <i class="fa-solid fa-credit-card"></i>
+            Proceed to Checkout
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-cart">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <h2>Your Cart is Empty</h2>
+
+        <p>Add some products and come back here.</p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

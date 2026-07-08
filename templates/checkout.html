@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#f4f7fb;
+            padding:20px;
+        }
+
+        .checkout-container{
+            width:100%;
+            max-width:500px;
+            background:#fff;
+            border-radius:20px;
+            padding:40px;
+            box-shadow:0 15px 40px rgba(0,0,0,0.08);
+            border:1px solid #e5e7eb;
+        }
+
+        .checkout-header{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .checkout-header h1{
+            color:#111827;
+            font-size:32px;
+            font-weight:700;
+            margin-bottom:10px;
+        }
+
+        .checkout-header p{
+            color:#6b7280;
+            font-size:14px;
+        }
+
+        form{
+            margin-top:20px;
+        }
+
+        form p{
+            margin-bottom:15px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:6px;
+            color:#374151;
+            font-weight:500;
+        }
+
+        input,
+        textarea,
+        select{
+            width:100%;
+            padding:12px 15px;
+            border:1px solid #d1d5db;
+            border-radius:10px;
+            font-size:15px;
+            background:#fafafa;
+            transition:0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus{
+            outline:none;
+            border-color:#2563eb;
+            background:#fff;
+            box-shadow:0 0 0 4px rgba(37,99,235,0.1);
+        }
+
+        .payment-info{
+            background:#f8fafc;
+            border:1px solid #e5e7eb;
+            border-radius:12px;
+            padding:15px;
+            margin-bottom:25px;
+        }
+
+        .payment-info h3{
+            color:#1e3a8a;
+            margin-bottom:8px;
+        }
+
+        .payment-info p{
+            color:#6b7280;
+            font-size:14px;
+        }
+
+        /* Razorpay Button */
+        .razorpay-payment-button{
+            width:100% !important;
+            background:#1e3a8a !important;
+            color:#fff !important;
+            border:none !important;
+            padding:14px !important;
+            border-radius:12px !important;
+            font-size:16px !important;
+            font-weight:600 !important;
+            cursor:pointer !important;
+            transition:0.3s !important;
+        }
+
+        .razorpay-payment-button:hover{
+            background:#2563eb !important;
+        }
+
+        .secure{
+            text-align:center;
+            margin-top:20px;
+            color:#6b7280;
+            font-size:13px;
+        }
+
+        @media(max-width:600px){
+            .checkout-container{
+                padding:25px;
+            }
+
+            .checkout-header h1{
+                font-size:26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container">
+
+        <div class="checkout-header">
+            <h1>Checkout</h1>
+            <p>Complete your payment securely</p>
+        </div>
+
+        <div class="payment-info">
+            <h3>🔒 Secure Payment</h3>
+            <p>Your payment is protected and processed securely through Razorpay.</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <script
+                src="https://checkout.razorpay.com/v1/checkout.js"
+                data-key="{{ razorpay_key }}"
+                data-amount="{{ razorpay_amount }}"
+                data-currency="INR"
+                data-order_id="{{ razorpay_order_id }}"
+                data-buttontext="Pay Now"
+                data-name="My Store"
+                data-description="Payment for your Order"
+                data-theme.color="#1E3A8A">
+            </script>
+
+            <input type="hidden" name="hidden">
+        </form>
+
+        <div class="secure">
+            🔐 Payments are encrypted and secured by Razorpay
+        </div>
+
+    </div>
+
+</body>
+</html>

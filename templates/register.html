@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#f4f7fb;
+            padding:20px;
+        }
+
+        .container{
+            width:100%;
+            max-width:480px;
+            background:#ffffff;
+            padding:40px;
+            border-radius:20px;
+            border:1px solid #e5e7eb;
+            box-shadow:0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .logo{
+            text-align:center;
+            margin-bottom:10px;
+        }
+
+        .logo h1{
+            color:#1e3a8a;
+            font-size:32px;
+            font-weight:700;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#6b7280;
+            margin-bottom:30px;
+            font-size:14px;
+        }
+
+        .input-group{
+            margin-bottom:18px;
+        }
+
+        .input-group label{
+            display:block;
+            margin-bottom:6px;
+            color:#374151;
+            font-size:14px;
+            font-weight:500;
+        }
+
+        input{
+            width:100%;
+            padding:14px 16px;
+            border:1px solid #d1d5db;
+            border-radius:12px;
+            font-size:15px;
+            background:#fafafa;
+            transition:all 0.3s ease;
+        }
+
+        input:focus{
+            outline:none;
+            background:#fff;
+            border-color:#2563eb;
+            box-shadow:0 0 0 4px rgba(37,99,235,0.1);
+        }
+
+        .register-btn{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            background:#1e3a8a;
+            color:#fff;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            margin-top:10px;
+        }
+
+        .register-btn:hover{
+            background:#1d4ed8;
+            transform:translateY(-2px);
+        }
+
+        .message{
+            text-align:center;
+            margin-top:15px;
+            color:#dc2626;
+            font-size:14px;
+            font-weight:500;
+        }
+
+        .login-link{
+            text-align:center;
+            margin-top:20px;
+            color:#6b7280;
+            font-size:14px;
+        }
+
+        .login-link a{
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:600;
+        }
+
+        .login-link a:hover{
+            text-decoration:underline;
+        }
+
+        @media(max-width:500px){
+            .container{
+                padding:25px;
+            }
+
+            .logo h1{
+                font-size:28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="logo">
+            <h1>Create Account</h1>
+        </div>
+
+        <p class="subtitle">Register to access your account</p>
+
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="input-group">
+                <label>First Name</label>
+                <input type="text" name="first_name" placeholder="Enter your first name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Last Name</label>
+                <input type="text" name="last_name" placeholder="Enter your last name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Enter your email address" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" name="cpassword" placeholder="Confirm your password" required>
+            </div>
+
+            <button type="submit" class="register-btn">
+                Create Account
+            </button>
+
+            {% for msg in messages %}
+                <p class="message">{{ msg }}</p>
+            {% endfor %}
+        </form>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="{% url 'login' %}">Sign In</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

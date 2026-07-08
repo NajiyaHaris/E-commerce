@@ -1,0 +1,490 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ product.name }}</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(135deg,#f8fafc,#eef2ff);
+    min-height:100vh;
+    padding:40px 20px;
+    color:#1e293b;
+}
+
+.container{
+    max-width:1300px;
+    margin:auto;
+}
+
+/* Back Button */
+
+.backhome{
+    margin-bottom:25px;
+}
+
+.backhome a{
+    text-decoration:none;
+    color:#3B030D;
+    font-weight:600;
+    transition:.3s;
+}
+
+.backhome a:hover{
+    color:#7a1024;
+}
+
+/* Product Card */
+
+.product-card{
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(12px);
+    border-radius:30px;
+    padding:50px;
+    display:flex;
+    gap:60px;
+    align-items:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+    margin-bottom:35px;
+}
+
+.product-image{
+    flex:1;
+    text-align:center;
+}
+
+.product-image img{
+    width:100%;
+    max-width:430px;
+    height:620px;
+    object-fit:cover;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    transition:.4s;
+}
+
+.product-image img:hover{
+    transform:scale(1.03);
+}
+
+.product-info{
+    flex:1;
+}
+
+.stock{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#dcfce7;
+    color:#16a34a;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:18px;
+}
+
+.product-info h1{
+    font-size:56px;
+    color:#3B030D;
+    margin-bottom:15px;
+    font-weight:800;
+}
+
+.rating{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+    font-size:18px;
+    font-weight:600;
+}
+
+.rating i{
+    color:#FFD700;
+}
+
+.price{
+    font-size:52px;
+    font-weight:800;
+    color:#16a34a;
+    margin-bottom:25px;
+}
+
+.description{
+    font-size:17px;
+    color:#64748b;
+    line-height:1.9;
+    margin-bottom:35px;
+}
+
+/* Buttons */
+
+.button-group{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    text-decoration:none;
+    padding:16px 35px;
+    border-radius:14px;
+    font-weight:600;
+    transition:.3s;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+}
+
+.cart-btn{
+    background:#3B030D;
+    color:white;
+}
+
+.cart-btn:hover{
+    background:#5c0818;
+    transform:translateY(-3px);
+}
+
+.buy-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.buy-btn:hover{
+    background:#15803d;
+    transform:translateY(-3px);
+}
+
+/* Messages */
+
+.alert-message{
+    background:#dcfce7;
+    color:#166534;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:25px;
+    font-weight:500;
+}
+
+/* Review Section */
+
+.review-section{
+    background:white;
+    border-radius:30px;
+    padding:40px;
+    box-shadow:0 15px 40px rgba(0,0,0,.06);
+}
+
+.review-section h2{
+    color:#3B030D;
+    margin-bottom:25px;
+    font-size:28px;
+}
+
+/* Star Rating Form */
+
+.star-rating{
+    display:flex;
+    flex-direction:row-reverse;
+    justify-content:flex-end;
+    gap:5px;
+    margin-bottom:20px;
+}
+
+.star-rating input{
+    display:none;
+}
+
+.star-rating label{
+    color:#ddd;
+    font-size:38px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label{
+    color:#FFD700;
+}
+
+.star-rating input:checked ~ label{
+    color:#FFD700;
+}
+
+/* Form */
+
+textarea{
+    width:100%;
+    padding:16px;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    resize:vertical;
+    font-size:15px;
+    margin-bottom:15px;
+    transition:.3s;
+}
+
+textarea:focus{
+    outline:none;
+    border-color:#3B030D;
+}
+
+.review-form button{
+    background:#3B030D;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.review-form button:hover{
+    background:#5c0818;
+}
+
+/* Review Cards */
+
+.review-card{
+    background:#fafafa;
+    border:1px solid #ececec;
+    border-radius:18px;
+    padding:25px;
+    margin-top:18px;
+    transition:.3s;
+}
+
+.review-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.review-card strong{
+    display:block;
+    color:#3B030D;
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.review-rating{
+    color:#FFD700;
+    margin-bottom:12px;
+    font-size:18px;
+}
+
+.review-card p{
+    color:#475569;
+    line-height:1.8;
+    margin-bottom:10px;
+}
+
+.review-card small{
+    color:#94a3b8;
+}
+
+.no-reviews{
+    text-align:center;
+    color:#94a3b8;
+    padding:20px;
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+
+    .product-card{
+        flex-direction:column;
+        text-align:center;
+        padding:30px;
+    }
+
+    .product-info h1{
+        font-size:38px;
+    }
+
+    .price{
+        font-size:36px;
+    }
+
+    .button-group{
+        justify-content:center;
+    }
+
+    .product-image img{
+        height:auto;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="backhome">
+        <a href="{% url 'home' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Products
+        </a>
+    </div>
+
+    <div class="product-card">
+
+        <div class="product-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+
+        <div class="product-info">
+
+            <div class="stock">
+                <i class="fa-solid fa-circle-check"></i>
+                In Stock
+            </div>
+
+            <h1>{{ product.name }}</h1>
+
+            <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                {{ average_rating|default:"0"|floatformat:1 }}/5 Rating
+            </div>
+
+            <div class="price">
+                SAR {{ product.price }}
+            </div>
+
+            <div class="description">
+                {{ product.description }}
+            </div>
+
+            <div class="button-group">
+
+                <a href="{% url 'add_to_cart' product.id %}" class="btn cart-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Add to Cart
+                </a>
+
+                <a href="{% url 'add_to_cart' product.id %}" class="btn buy-btn">
+                    <i class="fa-solid fa-bolt"></i>
+                    Buy Now
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="review-section">
+
+        <h2>
+            <i class="fa-solid fa-pen"></i>
+            Write a Review
+        </h2>
+
+        <form method="POST" class="review-form">
+            {% csrf_token %}
+
+            <div class="star-rating">
+
+                <input type="radio" id="star5" name="rating" value="5" required>
+                <label for="star5"><i class="fa-solid fa-star"></i></label>
+
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4"><i class="fa-solid fa-star"></i></label>
+
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3"><i class="fa-solid fa-star"></i></label>
+
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2"><i class="fa-solid fa-star"></i></label>
+
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1"><i class="fa-solid fa-star"></i></label>
+
+            </div>
+
+            <textarea
+                name="comment"
+                rows="5"
+                placeholder="Share your experience with this product..."
+                required></textarea>
+
+            <button type="submit">
+                Submit Review
+            </button>
+            
+
+        </form>
+        <div>
+            
+        </div>
+        <br><br>
+        <h2>
+            <i class="fa-solid fa-comments"></i>
+            Customer Reviews
+        </h2>
+
+        {% for review in reviews %}
+
+        <div class="review-card">
+
+            <strong>{{ review.user.username }}</strong>
+
+            <div class="review-rating">
+
+                {% for i in "12345" %}
+                    {% if forloop.counter <= review.rating %}
+                        <i class="fa-solid fa-star"></i>
+                    {% else %}
+                        <i class="fa-regular fa-star"></i>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+
+            <p>{{ review.comment }}</p>
+
+            <small>
+                {{ review.created_at|date:"d M Y, h:i A" }}
+            </small>
+
+        </div>
+
+        {% empty %}
+
+        <div class="no-reviews">
+            No reviews yet. Be the first to review this product.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#f4f7fb;
+            padding:20px;
+        }
+
+        .success-card{
+            width:100%;
+            max-width:650px;
+            background:#fff;
+            border-radius:24px;
+            padding:50px;
+            text-align:center;
+            box-shadow:0 15px 40px rgba(0,0,0,0.08);
+            border:1px solid #e5e7eb;
+        }
+
+        .success-icon{
+            font-size:90px;
+            color:#22c55e;
+            margin-bottom:20px;
+        }
+
+        .success-title{
+            font-size:38px;
+            font-weight:700;
+            color:#111827;
+            margin-bottom:10px;
+        }
+
+        .success-message{
+            color:#6b7280;
+            font-size:17px;
+            margin-bottom:35px;
+        }
+
+        .order-details{
+            background:#f8fafc;
+            border:1px solid #e5e7eb;
+            border-radius:16px;
+            padding:25px;
+            text-align:left;
+            margin-bottom:30px;
+        }
+
+        .order-details h3{
+            color:#1e3a8a;
+            margin-bottom:20px;
+            font-size:22px;
+        }
+
+        .detail-row{
+            display:flex;
+            justify-content:space-between;
+            padding:12px 0;
+            border-bottom:1px solid #e5e7eb;
+        }
+
+        .detail-row:last-child{
+            border-bottom:none;
+        }
+
+        .label{
+            font-weight:600;
+            color:#374151;
+        }
+
+        .value{
+            color:#111827;
+        }
+
+        .paid{
+            color:#22c55e;
+            font-weight:700;
+        }
+
+        .continue-btn{
+            display:inline-block;
+            text-decoration:none;
+            background:#1e3a8a;
+            color:white;
+            padding:14px 35px;
+            border-radius:12px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .continue-btn:hover{
+            background:#2563eb;
+            transform:translateY(-2px);
+        }
+
+        .thank-note{
+            margin-top:20px;
+            color:#6b7280;
+            font-size:14px;
+        }
+
+        @media(max-width:768px){
+            .success-card{
+                padding:30px;
+            }
+
+            .success-title{
+                font-size:30px;
+            }
+
+            .detail-row{
+                flex-direction:column;
+                gap:5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            <i class="bi bi-check-circle-fill"></i>
+        </div>
+
+        <h1 class="success-title">Order Confirmed!</h1>
+
+        <p class="success-message">
+            Thank you for your purchase. Your order has been placed successfully.
+        </p>
+
+        <div class="order-details">
+            <h3>Order Summary</h3>
+
+            <div class="detail-row">
+                <span class="label">Order ID</span>
+                <span class="value">#{{ order.id }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="label">Customer Name</span>
+                <span class="value">{{ order.name }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="label">Total Paid</span>
+                <span class="value paid">₹{{ order.total|floatformat:2 }}</span>
+            </div>
+
+            {% if order.created_at %}
+            <div class="detail-row">
+                <span class="label">Order Date</span>
+                <span class="value">
+                    {{ order.created_at|date:"F d, Y h:i A" }}
+                </span>
+            </div>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'home' %}" class="continue-btn">
+            Continue Shopping
+        </a>
+
+        <p class="thank-note">
+            We appreciate your business and hope to see you again soon.
+        </p>
+
+    </div>
+
+</body>
+</html>
